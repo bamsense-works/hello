@@ -316,16 +316,14 @@ body {
 .hero-container {
     position: relative;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: var(--spacing-lg);
-    text-align: center;
+    align-items: center;
 }
 
 .hero-content {
-    max-width: 900px;
-    width: 100%;
+    max-width: 700px;
 }
 
 .hero-badge {
@@ -393,21 +391,13 @@ body {
     animation: fadeInUp 0.8s ease 0.4s backwards;
 }
 
-.hero-buttons-centered {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-lg);
-    animation: fadeInUp 0.8s ease 0.6s backwards;
-}
-
 .hero-buttons {
     display: flex;
     gap: var(--spacing-sm);
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: var(--spacing-md);
+    animation: fadeInUp 0.8s ease 0.6s backwards;
 }
 
 @keyframes fadeInUp {
@@ -477,6 +467,8 @@ body {
     display: flex;
     gap: var(--spacing-lg);
     flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--spacing-md);
     animation: fadeInUp 0.8s ease 0.8s backwards;
 }
 
@@ -516,7 +508,7 @@ body {
 /* Hero Visual Dashboard */
 .hero-visual {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     animation: fadeInUp 0.8s ease 1s backwards;
 }
@@ -1100,40 +1092,6 @@ section {
     background: linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-card) 100%);
 }
 
-.demo-highlight-badges {
-    display: flex;
-    gap: var(--spacing-md);
-    justify-content: center;
-    margin-top: var(--spacing-md);
-    flex-wrap: wrap;
-}
-
-.highlight-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.5rem;
-    background: rgba(0, 102, 255, 0.1);
-    border: 1px solid rgba(0, 102, 255, 0.3);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: var(--transition-normal);
-}
-
-.highlight-badge i {
-    font-size: 1.25rem;
-    color: var(--primary-blue);
-}
-
-.highlight-badge:hover {
-    background: rgba(0, 102, 255, 0.15);
-    border-color: rgba(0, 102, 255, 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 102, 255, 0.2);
-}
-
 .demo-tabs {
     display: flex;
     gap: 1rem;
@@ -1265,6 +1223,45 @@ section {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     font-family: var(--font-display);
+}
+
+.demo-ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 191, 255, 0.2));
+    border: 1px solid rgba(0, 102, 255, 0.4);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+.demo-ai-badge.faculty-badge {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(147, 51, 234, 0.2));
+    border-color: rgba(138, 43, 226, 0.4);
+    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+}
+
+.demo-ai-badge.platform-badge {
+    background: linear-gradient(135deg, rgba(67, 233, 123, 0.2), rgba(56, 178, 172, 0.2));
+    border-color: rgba(67, 233, 123, 0.4);
+    box-shadow: 0 4px 12px rgba(67, 233, 123, 0.2);
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+    }
 }
 
 .demo-cards {
