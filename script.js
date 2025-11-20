@@ -1,8 +1,10 @@
-// ===============================================
-// BAMSense Works - Professional Clean JavaScript
-// ===============================================
+// ===========================
+// BAMSense Works - Enhanced Interactive Features
+// ===========================
 
-// ==================== Mobile Menu ====================
+// ===========================
+// Mobile Menu Toggle
+// ===========================
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('navMenu');
 
@@ -21,14 +23,16 @@ if (hamburger && navMenu) {
     });
 }
 
-// ==================== Navbar Scroll Effect ====================
+// ===========================
+// Navbar Scroll Effect
+// ===========================
 const navbar = document.getElementById('navbar');
 let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
 
-    if (currentScroll > 50) {
+    if (currentScroll > 100) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
@@ -37,19 +41,17 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-// ==================== Smooth Scrolling ====================
+// ===========================
+// Smooth Scrolling
+// ===========================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
+        e.preventDefault();
 
-        // Don't prevent default for non-section links
-        if (href === '#' || href.length <= 1) return;
-
-        const target = document.querySelector(href);
+        const target = document.querySelector(this.getAttribute('href'));
 
         if (target) {
-            e.preventDefault();
-            const headerOffset = 72;
+            const headerOffset = 80;
             const elementPosition = target.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -61,7 +63,38 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ==================== Active Nav Link on Scroll ====================
+// ===========================
+// Scroll Animations
+// ===========================
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+        }
+    });
+}, observerOptions);
+
+// Add animation class to elements
+document.addEventListener('DOMContentLoaded', () => {
+    // Animate cards and sections
+    const animatedElements = document.querySelectorAll(
+        '.product-card, .why-card, .feature-item, .visual-card, .mv-card, .contact-card'
+    );
+
+    animatedElements.forEach(el => {
+        el.classList.add('animate-on-scroll');
+        observer.observe(el);
+    });
+});
+
+// ===========================
+// Active Nav Link on Scroll
+// ===========================
 const sections = document.querySelectorAll('section[id]');
 
 function highlightNavLink() {
@@ -86,86 +119,177 @@ function highlightNavLink() {
 
 window.addEventListener('scroll', highlightNavLink);
 
-// ==================== Scroll Animations ====================
-const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
-};
+// ===========================
+// Stats Counter Animation
+// ===========================
+function animateCounter(element, target) {
+    const targetNumber = parseInt(target);
+    const duration = 2000;
+    const startTime = performance.now();
 
-const observer = new IntersectionObserver((entries) => {
+    function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Easing function
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const current = Math.floor(easeOutQuart * targetNumber);
+
+        element.textContent = current;
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        } else {
+            element.textContent = target;
+        }
+    }
+
+    requestAnimationFrame(updateCounter);
+}
+
+// Trigger counter animation when stats come into view
+const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animate-on-scroll');
+        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+            entry.target.classList.add('counted');
+            const statNumbers = entry.target.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const target = stat.getAttribute('data-target');
+                if (target) {
+                    animateCounter(stat, target);
+                }
+            });
         }
     });
-}, observerOptions);
+}, { threshold: 0.5 });
 
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll(
-        '.experience-card, .product-card, .why-item, .stat'
-    );
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) {
+    statsObserver.observe(heroStats);
+}
 
-    animatedElements.forEach((el, index) => {
-        el.style.animationDelay = `${index * 0.1}s`;
-        observer.observe(el);
+// ===========================
+// Demo Tab System
+// ===========================
+const demoTabs = document.querySelectorAll('.demo-tab');
+const demoContents = document.querySelectorAll('.demo-content');
+
+demoTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const targetDemo = tab.getAttribute('data-demo');
+
+        // Remove active class from all tabs
+        demoTabs.forEach(t => t.classList.remove('active'));
+
+        // Remove active class from all demo contents
+        demoContents.forEach(content => content.classList.remove('active'));
+
+        // Add active class to clicked tab
+        tab.classList.add('active');
+
+        // Show corresponding demo content
+        const targetContent = document.querySelector(`[data-demo-content="${targetDemo}"]`);
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
     });
 });
 
-// ==================== Chat Widget ====================
-const chatButton = document.getElementById('chatButton');
-const chatWindow = document.getElementById('chatWindow');
-const chatClose = document.getElementById('chatClose');
-const chatSend = document.getElementById('chatSend');
-const chatInput = document.getElementById('chatInput');
+// ===========================
+// Scroll to Demo Function
+// ===========================
+window.scrollToDemo = function(productId) {
+    // Find and click the corresponding demo tab
+    const demoTab = document.querySelector(`.demo-tab[data-demo="${productId}"]`);
+    if (demoTab) {
+        demoTab.click();
 
-if (chatButton && chatWindow) {
-    chatButton.addEventListener('click', () => {
-        chatWindow.classList.add('active');
-        chatButton.style.display = 'none';
-        chatInput.focus();
+        // Scroll to demos section
+        const demosSection = document.getElementById('demos');
+        if (demosSection) {
+            const headerOffset = 80;
+            const elementPosition = demosSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+};
+
+// ===========================
+// Product Card 3D Tilt Effect
+// ===========================
+const productCards = document.querySelectorAll('.product-card');
+
+productCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
     });
 
-    if (chatClose) {
-        chatClose.addEventListener('click', () => {
-            chatWindow.classList.remove('active');
-            chatButton.style.display = 'flex';
-        });
-    }
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+    });
+});
 
-    if (chatSend && chatInput) {
-        chatSend.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    }
-}
+// ===========================
+// Scroll Progress Indicator
+// ===========================
+const progressBar = document.createElement('div');
+progressBar.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0066FF, #00BFFF);
+    z-index: 9999;
+    transition: width 0.1s ease;
+    pointer-events: none;
+`;
+document.body.appendChild(progressBar);
 
-function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const messagesContainer = document.getElementById('chatMessages');
-    const message = input.value.trim();
+window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    progressBar.style.width = scrolled + '%';
+});
 
-    if (message) {
-        // Add user message
-        const userMessageDiv = document.createElement('div');
-        userMessageDiv.className = 'chat-message user-message';
-        userMessageDiv.innerHTML = `<p>${message}</p>`;
-        messagesContainer.appendChild(userMessageDiv);
+// ===========================
+// Parallax Effect for Hero Background
+// ===========================
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelectorAll('.geometric-shape');
 
-        // Clear input
-        input.value = '';
+    parallaxElements.forEach((element, index) => {
+        const speed = 0.3 + (index * 0.1);
+        element.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+});
 
-        // Scroll to bottom
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+// ===========================
+// Loading Animation
+// ===========================
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
 
-        // Note: The actual AI response is handled by chat.js
-    }
-}
-
-// ==================== Dynamic Year in Footer ====================
+// ===========================
+// Dynamic Year in Footer
+// ===========================
 const yearElements = document.querySelectorAll('.current-year');
 if (yearElements.length > 0) {
     const currentYear = new Date().getFullYear();
@@ -174,38 +298,124 @@ if (yearElements.length > 0) {
     });
 }
 
-// ==================== Keyboard Navigation ====================
+// ===========================
+// Lazy Loading for Images
+// ===========================
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    observer.unobserve(img);
+                }
+            }
+        });
+    });
+
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+    });
+}
+
+// ===========================
+// Detect Dark/Light Mode Preference
+// ===========================
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    // User prefers light mode - currently we use dark theme
+    // Can be extended for theme switching
+}
+
+// ===========================
+// Keyboard Navigation
+// ===========================
 document.addEventListener('keydown', (e) => {
-    // ESC key closes mobile menu and chat
+    // ESC key closes mobile menu
     if (e.key === 'Escape') {
         if (hamburger && navMenu) {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
         }
-        if (chatWindow && chatWindow.classList.contains('active')) {
-            chatWindow.classList.remove('active');
-            chatButton.style.display = 'flex';
-        }
     }
 });
 
-// ==================== Loading Animation ====================
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
+// ===========================
+// Smooth Reveal on Scroll
+// ===========================
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, {
+    threshold: 0.1
 });
 
-// ==================== Performance Monitoring ====================
+document.querySelectorAll('.section-header, .hero-content').forEach(el => {
+    revealObserver.observe(el);
+});
+
+// ===========================
+// Console Easter Egg
+// ===========================
+console.log('%c🎓 BAMSense Works', 'font-size: 24px; font-weight: bold; color: #0066FF; text-shadow: 2px 2px 4px rgba(0,102,255,0.3);');
+console.log('%c✨ Intelligence That Powers Education', 'font-size: 16px; color: #00BFFF; font-weight: 600;');
+console.log('%c🚀 Transforming the future of education with AI', 'font-size: 14px; color: #B4C1D8;');
+console.log('%cInterested in joining our team? Contact us at bamsense.works@gmail.com', 'font-size: 12px; color: #7B8CA3; font-style: italic;');
+
+// ===========================
+// Performance Monitoring
+// ===========================
 if ('performance' in window) {
     window.addEventListener('load', () => {
         setTimeout(() => {
             const perfData = window.performance.timing;
             const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-            console.log(`%cPage Load Time: ${pageLoadTime}ms`, 'color: #0066FF; font-weight: bold;');
+            console.log(`%cPage Load Time: ${pageLoadTime}ms`, 'color: #43e97b; font-weight: bold;');
         }, 0);
     });
 }
 
-// ==================== Initialize ====================
+// ===========================
+// Error Handling
+// ===========================
+window.addEventListener('error', (e) => {
+    console.error('An error occurred:', e.message);
+});
+
+// ===========================
+// Accessibility Enhancements
+// ===========================
+// Add skip to content link
+const skipLink = document.createElement('a');
+skipLink.href = '#home';
+skipLink.className = 'skip-link';
+skipLink.textContent = 'Skip to content';
+skipLink.style.cssText = `
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #0066FF;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 10000;
+`;
+skipLink.addEventListener('focus', () => {
+    skipLink.style.top = '0';
+});
+skipLink.addEventListener('blur', () => {
+    skipLink.style.top = '-40px';
+});
+document.body.insertBefore(skipLink, document.body.firstChild);
+
+// ===========================
+// Initialize All Features
+// ===========================
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c✓ BAMSense Works website initialized', 'color: #0066FF; font-weight: bold; font-size: 14px;');
+    console.log('%c✅ BAMSense Works website initialized successfully!', 'color: #43e97b; font-weight: bold;');
 });
