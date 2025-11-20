@@ -1,21 +1,27 @@
 // ===========================
+// BAMSense Works - Enhanced Interactive Features
+// ===========================
+
+// ===========================
 // Mobile Menu Toggle
 // ===========================
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('navMenu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
     });
-});
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+}
 
 // ===========================
 // Navbar Scroll Effect
@@ -77,7 +83,7 @@ const observer = new IntersectionObserver((entries) => {
 document.addEventListener('DOMContentLoaded', () => {
     // Animate cards and sections
     const animatedElements = document.querySelectorAll(
-        '.product-card, .why-card, .feature-item, .visual-card, .mv-card'
+        '.product-card, .why-card, .feature-item, .visual-card, .mv-card, .contact-card'
     );
 
     animatedElements.forEach(el => {
@@ -114,51 +120,45 @@ function highlightNavLink() {
 window.addEventListener('scroll', highlightNavLink);
 
 // ===========================
-// Parallax Effect for Hero Background
-// ===========================
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.geometric-shape');
-
-    parallaxElements.forEach((element, index) => {
-        const speed = 0.5 + (index * 0.1);
-        element.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
-
-// ===========================
 // Stats Counter Animation
 // ===========================
-function animateCounter(element, target, duration = 2000) {
-    let current = 0;
-    const increment = target / (duration / 16);
-    const isPercentage = target.toString().includes('%');
+function animateCounter(element, target) {
+    const targetNumber = parseInt(target);
+    const duration = 2000;
+    const startTime = performance.now();
 
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= parseFloat(target)) {
-            clearInterval(timer);
-            element.textContent = target;
+    function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Easing function
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const current = Math.floor(easeOutQuart * targetNumber);
+
+        element.textContent = current;
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
         } else {
-            if (isPercentage) {
-                element.textContent = Math.floor(current) + '%';
-            } else {
-                element.textContent = Math.floor(current);
-            }
+            element.textContent = target;
         }
-    }, 16);
+    }
+
+    requestAnimationFrame(updateCounter);
 }
 
 // Trigger counter animation when stats come into view
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+            entry.target.classList.add('counted');
             const statNumbers = entry.target.querySelectorAll('.stat-number');
             statNumbers.forEach(stat => {
-                const target = stat.textContent.trim();
-                animateCounter(stat, target, 1500);
+                const target = stat.getAttribute('data-target');
+                if (target) {
+                    animateCounter(stat, target);
+                }
             });
-            statsObserver.unobserve(entry.target);
         }
     });
 }, { threshold: 0.5 });
@@ -169,37 +169,58 @@ if (heroStats) {
 }
 
 // ===========================
-// Cursor Effect (Optional)
+// Demo Tab System
 // ===========================
-const cursor = document.createElement('div');
-cursor.classList.add('custom-cursor');
-document.body.appendChild(cursor);
+const demoTabs = document.querySelectorAll('.demo-tab');
+const demoContents = document.querySelectorAll('.demo-content');
 
-document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-});
+demoTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const targetDemo = tab.getAttribute('data-demo');
 
-// Add hover effect to interactive elements
-const interactiveElements = document.querySelectorAll('a, button, .product-card, .why-card');
-interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'scale(1.5)';
+        // Remove active class from all tabs
+        demoTabs.forEach(t => t.classList.remove('active'));
+
+        // Remove active class from all demo contents
+        demoContents.forEach(content => content.classList.remove('active'));
+
+        // Add active class to clicked tab
+        tab.classList.add('active');
+
+        // Show corresponding demo content
+        const targetContent = document.querySelector(`[data-demo-content="${targetDemo}"]`);
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
     });
-    el.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'scale(1)';
-    });
 });
 
 // ===========================
-// Loading Animation
+// Scroll to Demo Function
 // ===========================
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
+window.scrollToDemo = function(productId) {
+    // Find and click the corresponding demo tab
+    const demoTab = document.querySelector(`.demo-tab[data-demo="${productId}"]`);
+    if (demoTab) {
+        demoTab.click();
+
+        // Scroll to demos section
+        const demosSection = document.getElementById('demos');
+        if (demosSection) {
+            const headerOffset = 80;
+            const elementPosition = demosSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+};
 
 // ===========================
-// Product Card Tilt Effect (3D)
+// Product Card 3D Tilt Effect
 // ===========================
 const productCards = document.querySelectorAll('.product-card');
 
@@ -212,10 +233,10 @@ productCards.forEach(card => {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
     });
 
     card.addEventListener('mouseleave', () => {
@@ -235,6 +256,7 @@ progressBar.style.cssText = `
     background: linear-gradient(90deg, #0066FF, #00BFFF);
     z-index: 9999;
     transition: width 0.1s ease;
+    pointer-events: none;
 `;
 document.body.appendChild(progressBar);
 
@@ -246,16 +268,154 @@ window.addEventListener('scroll', () => {
 });
 
 // ===========================
-// Form Validation (if you add a contact form)
+// Parallax Effect for Hero Background
 // ===========================
-function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelectorAll('.geometric-shape');
+
+    parallaxElements.forEach((element, index) => {
+        const speed = 0.3 + (index * 0.1);
+        element.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+});
+
+// ===========================
+// Loading Animation
+// ===========================
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
+
+// ===========================
+// Dynamic Year in Footer
+// ===========================
+const yearElements = document.querySelectorAll('.current-year');
+if (yearElements.length > 0) {
+    const currentYear = new Date().getFullYear();
+    yearElements.forEach(el => {
+        el.textContent = currentYear;
+    });
 }
 
 // ===========================
-// Console Message
+// Lazy Loading for Images
 // ===========================
-console.log('%c🎓 BAMSense Works', 'font-size: 20px; font-weight: bold; color: #0066FF;');
-console.log('%cIntelligence That Powers Education', 'font-size: 14px; color: #00BFFF;');
-console.log('%cWebsite built with modern web technologies', 'font-size: 12px; color: #7B8CA3;');
+if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    observer.unobserve(img);
+                }
+            }
+        });
+    });
+
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+    });
+}
+
+// ===========================
+// Detect Dark/Light Mode Preference
+// ===========================
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    // User prefers light mode - currently we use dark theme
+    // Can be extended for theme switching
+}
+
+// ===========================
+// Keyboard Navigation
+// ===========================
+document.addEventListener('keydown', (e) => {
+    // ESC key closes mobile menu
+    if (e.key === 'Escape') {
+        if (hamburger && navMenu) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    }
+});
+
+// ===========================
+// Smooth Reveal on Scroll
+// ===========================
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+document.querySelectorAll('.section-header, .hero-content').forEach(el => {
+    revealObserver.observe(el);
+});
+
+// ===========================
+// Console Easter Egg
+// ===========================
+console.log('%c🎓 BAMSense Works', 'font-size: 24px; font-weight: bold; color: #0066FF; text-shadow: 2px 2px 4px rgba(0,102,255,0.3);');
+console.log('%c✨ Intelligence That Powers Education', 'font-size: 16px; color: #00BFFF; font-weight: 600;');
+console.log('%c🚀 Transforming the future of education with AI', 'font-size: 14px; color: #B4C1D8;');
+console.log('%cInterested in joining our team? Contact us at bamsense.works@gmail.com', 'font-size: 12px; color: #7B8CA3; font-style: italic;');
+
+// ===========================
+// Performance Monitoring
+// ===========================
+if ('performance' in window) {
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const perfData = window.performance.timing;
+            const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+            console.log(`%cPage Load Time: ${pageLoadTime}ms`, 'color: #43e97b; font-weight: bold;');
+        }, 0);
+    });
+}
+
+// ===========================
+// Error Handling
+// ===========================
+window.addEventListener('error', (e) => {
+    console.error('An error occurred:', e.message);
+});
+
+// ===========================
+// Accessibility Enhancements
+// ===========================
+// Add skip to content link
+const skipLink = document.createElement('a');
+skipLink.href = '#home';
+skipLink.className = 'skip-link';
+skipLink.textContent = 'Skip to content';
+skipLink.style.cssText = `
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #0066FF;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 10000;
+`;
+skipLink.addEventListener('focus', () => {
+    skipLink.style.top = '0';
+});
+skipLink.addEventListener('blur', () => {
+    skipLink.style.top = '-40px';
+});
+document.body.insertBefore(skipLink, document.body.firstChild);
+
+// ===========================
+// Initialize All Features
+// ===========================
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('%c✅ BAMSense Works website initialized successfully!', 'color: #43e97b; font-weight: bold;');
+});
