@@ -6,7 +6,7 @@
 // This is a demonstration of client-side integration
 // In production, proxy all API calls through your backend
 
-const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // Replace with your actual API key
+const GEMINI_API_KEY = 'AIzaSyAYy-bYwYMwx_vxF2n_UkxYE1oNSol4ayU'; // Replace with your actual API key
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
 // BAMSense Works Company Knowledge Base
