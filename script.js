@@ -1,6 +1,90 @@
 // ===========================
-// BAMSense Works - Enhanced Interactive Features
+// BAMSense Works - Enhanced Interactive Features with Neural Network
 // ===========================
+
+// ===========================
+// Neural Network Background Canvas
+// ===========================
+const canvas = document.getElementById('neuralNetwork');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    const particleCount = 80;
+
+    function resizeCanvas() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.radius = Math.random() * 2 + 1;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 102, 255, 0.6)';
+            ctx.fill();
+        }
+    }
+
+    function init() {
+        resizeCanvas();
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function connect() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 150) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(0, 102, 255, ${0.2 * (1 - dist / 150)})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+
+        connect();
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    init();
+    animate();
+}
 
 // ===========================
 // Mobile Menu Toggle
@@ -83,7 +167,7 @@ const observer = new IntersectionObserver((entries) => {
 document.addEventListener('DOMContentLoaded', () => {
     // Animate cards and sections
     const animatedElements = document.querySelectorAll(
-        '.product-card, .why-card, .feature-item, .visual-card, .mv-card, .contact-card'
+        '.product-card-full, .why-card, .ai-capability-card, .contact-card'
     );
 
     animatedElements.forEach(el => {
@@ -120,12 +204,13 @@ function highlightNavLink() {
 window.addEventListener('scroll', highlightNavLink);
 
 // ===========================
-// Stats Counter Animation
+// Stats Counter Animation for Ecosystem
 // ===========================
 function animateCounter(element, target) {
-    const targetNumber = parseInt(target);
+    const targetNumber = parseInt(target.replace(/[^0-9]/g, ''));
     const duration = 2000;
     const startTime = performance.now();
+    const suffix = target.replace(/[0-9]/g, '');
 
     function updateCounter(currentTime) {
         const elapsed = currentTime - startTime;
@@ -135,7 +220,7 @@ function animateCounter(element, target) {
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
         const current = Math.floor(easeOutQuart * targetNumber);
 
-        element.textContent = current;
+        element.textContent = current + suffix;
 
         if (progress < 1) {
             requestAnimationFrame(updateCounter);
@@ -147,102 +232,24 @@ function animateCounter(element, target) {
     requestAnimationFrame(updateCounter);
 }
 
-// Trigger counter animation when stats come into view
-const statsObserver = new IntersectionObserver((entries) => {
+// Trigger counter animation when ecosystem comes into view
+const ecosystemObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
             entry.target.classList.add('counted');
-            const statNumbers = entry.target.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                const target = stat.getAttribute('data-target');
-                if (target) {
-                    animateCounter(stat, target);
-                }
+            const counterElements = entry.target.querySelectorAll('.module-info span');
+            counterElements.forEach(counter => {
+                const target = counter.textContent;
+                animateCounter(counter, target);
             });
         }
     });
 }, { threshold: 0.5 });
 
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) {
-    statsObserver.observe(heroStats);
+const ecosystemSection = document.querySelector('.ecosystem-section');
+if (ecosystemSection) {
+    ecosystemObserver.observe(ecosystemSection);
 }
-
-// ===========================
-// Demo Tab System
-// ===========================
-const demoTabs = document.querySelectorAll('.demo-tab');
-const demoContents = document.querySelectorAll('.demo-content');
-
-demoTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        const targetDemo = tab.getAttribute('data-demo');
-
-        // Remove active class from all tabs
-        demoTabs.forEach(t => t.classList.remove('active'));
-
-        // Remove active class from all demo contents
-        demoContents.forEach(content => content.classList.remove('active'));
-
-        // Add active class to clicked tab
-        tab.classList.add('active');
-
-        // Show corresponding demo content
-        const targetContent = document.querySelector(`[data-demo-content="${targetDemo}"]`);
-        if (targetContent) {
-            targetContent.classList.add('active');
-        }
-    });
-});
-
-// ===========================
-// Scroll to Demo Function
-// ===========================
-window.scrollToDemo = function(productId) {
-    // Find and click the corresponding demo tab
-    const demoTab = document.querySelector(`.demo-tab[data-demo="${productId}"]`);
-    if (demoTab) {
-        demoTab.click();
-
-        // Scroll to demos section
-        const demosSection = document.getElementById('demos');
-        if (demosSection) {
-            const headerOffset = 80;
-            const elementPosition = demosSection.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        }
-    }
-};
-
-// ===========================
-// Product Card 3D Tilt Effect
-// ===========================
-const productCards = document.querySelectorAll('.product-card');
-
-productCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-    });
-});
 
 // ===========================
 // Scroll Progress Indicator
@@ -268,7 +275,7 @@ window.addEventListener('scroll', () => {
 });
 
 // ===========================
-// Parallax Effect for Hero Background
+// Parallax Effect for Geometric Shapes
 // ===========================
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
@@ -321,14 +328,6 @@ if ('IntersectionObserver' in window) {
 }
 
 // ===========================
-// Detect Dark/Light Mode Preference
-// ===========================
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    // User prefers light mode - currently we use dark theme
-    // Can be extended for theme switching
-}
-
-// ===========================
 // Keyboard Navigation
 // ===========================
 document.addEventListener('keydown', (e) => {
@@ -364,7 +363,9 @@ document.querySelectorAll('.section-header, .hero-content').forEach(el => {
 // ===========================
 console.log('%c🎓 BAMSense Works', 'font-size: 24px; font-weight: bold; color: #0066FF; text-shadow: 2px 2px 4px rgba(0,102,255,0.3);');
 console.log('%c✨ Intelligence That Powers Education', 'font-size: 16px; color: #00BFFF; font-weight: 600;');
-console.log('%c🚀 Transforming the future of education with AI', 'font-size: 14px; color: #B4C1D8;');
+console.log('%c🚀 AI-Rich University Management System', 'font-size: 14px; color: #B4C1D8;');
+console.log('%c👨‍🎓 Personal AI Assistant for Every Student', 'font-size: 12px; color: #43e97b;');
+console.log('%c👨‍🏫 AI Teaching Assistant for Every Faculty', 'font-size: 12px; color: #fa709a;');
 console.log('%cInterested in joining our team? Contact us at bamsense.works@gmail.com', 'font-size: 12px; color: #7B8CA3; font-style: italic;');
 
 // ===========================
@@ -417,5 +418,7 @@ document.body.insertBefore(skipLink, document.body.firstChild);
 // Initialize All Features
 // ===========================
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c✅ BAMSense Works website initialized successfully!', 'color: #43e97b; font-weight: bold;');
+    console.log('%c✅ BAMSense Works AI-Rich website initialized successfully!', 'color: #43e97b; font-weight: bold;');
+    console.log('%c🧠 Neural network background active', 'color: #0066FF;');
+    console.log('%c🎯 Full-screen sections optimized', 'color: #00BFFF;');
 });
