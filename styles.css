@@ -316,6 +316,12 @@ body {
 .hero-container {
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.hero-top {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-lg);
@@ -465,17 +471,17 @@ body {
 
 .hero-stats {
     display: flex;
-    gap: var(--spacing-lg);
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: var(--spacing-md);
-    animation: fadeInUp 0.8s ease 0.8s backwards;
+    gap: var(--spacing-xl);
+    justify-content: space-around;
+    align-items: center;
+    padding: var(--spacing-lg) 0;
+    animation: fadeInUp 0.8s ease 1.2s backwards;
 }
 
 .stat-item {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    gap: var(--spacing-md);
     transition: transform 0.3s ease;
 }
 
@@ -484,12 +490,26 @@ body {
 }
 
 .stat-icon {
-    font-size: 2rem;
-    filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.5));
+    font-size: 3.5rem;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 102, 255, 0.1);
+    border-radius: 20px;
+    border: 1px solid rgba(0, 102, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
 .stat-number {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 900;
     font-family: var(--font-display);
     background: var(--gradient-1);
@@ -497,18 +517,18 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1;
-    filter: drop-shadow(0 0 20px rgba(0, 102, 255, 0.3));
 }
 
 .stat-label {
-    color: var(--text-muted);
-    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 /* Hero Visual Dashboard */
 .hero-visual {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     animation: fadeInUp 0.8s ease 1s backwards;
 }
