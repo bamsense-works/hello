@@ -77,25 +77,100 @@
                             <div class="dashboard-dots">
                                 <span></span><span></span><span></span>
                             </div>
-                            <span class="dashboard-title">BAMSense AI Platform</span>
+                            <div class="dashboard-tabs">
+                                <span class="tab-item active">Dashboard</span>
+                                <span class="tab-item">Analytics</span>
+                            </div>
+                            <div class="dashboard-actions">
+                                <i class="fas fa-search"></i>
+                                <i class="fas fa-bell"></i>
+                                <div class="user-avatar"></div>
+                            </div>
                         </div>
-                        <div class="dashboard-content">
-                            <div class="dashboard-stats">
-                                <div class="dash-stat">
-                                    <span class="dash-value">2,847</span>
-                                    <span class="dash-label">Students with AI Assistants</span>
+                        <div class="dashboard-sidebar">
+                            <div class="sidebar-item active"><i class="fas fa-th-large"></i> Dashboard</div>
+                            <div class="sidebar-item"><i class="fas fa-user-graduate"></i> Students</div>
+                            <div class="sidebar-item"><i class="fas fa-broadcast-tower"></i> Broadcast</div>
+                            <div class="sidebar-item"><i class="fas fa-users"></i> Teamworks</div>
+                            <div class="sidebar-item"><i class="fas fa-calendar"></i> Events</div>
+                            <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+                        </div>
+                        <div class="dashboard-main">
+                            <div class="dashboard-top-stats">
+                                <div class="top-stat-card">
+                                    <div class="stat-mini-label">Students</div>
+                                    <div class="stat-mini-value">80%</div>
+                                    <div class="stat-mini-subtitle">AI-Powered Aid</div>
                                 </div>
-                                <div class="dash-stat">
-                                    <span class="dash-value">156</span>
-                                    <span class="dash-label">Faculty with AI Teaching Assistants</span>
+                                <div class="top-stat-card highlight">
+                                    <div class="stat-mini-label">Total Students</div>
+                                    <div class="stat-mini-value large">2,847</div>
+                                    <div class="stat-mini-subtitle">With AI Assistants</div>
+                                </div>
+                                <div class="top-stat-card">
+                                    <div class="stat-mini-label">Faculty</div>
+                                    <div class="stat-mini-value">100%</div>
+                                    <div class="stat-mini-subtitle">Get AI Assistant</div>
                                 </div>
                             </div>
-                            <div class="dashboard-chart">
-                                <div class="chart-bar" style="height: 40%"></div>
-                                <div class="chart-bar" style="height: 65%"></div>
-                                <div class="chart-bar" style="height: 85%"></div>
-                                <div class="chart-bar" style="height: 95%"></div>
-                                <div class="chart-bar" style="height: 75%"></div>
+                            <div class="dashboard-chart-section">
+                                <div class="chart-header">
+                                    <span>Student Insights</span>
+                                    <div class="chart-legend">
+                                        <span class="legend-item"><span class="dot blue"></span> Attendance</span>
+                                        <span class="legend-item"><span class="dot green"></span> Performance</span>
+                                    </div>
+                                </div>
+                                <div class="dashboard-chart">
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar blue" style="height: 45%"></div>
+                                        <div class="chart-bar green" style="height: 60%"></div>
+                                    </div>
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar blue" style="height: 60%"></div>
+                                        <div class="chart-bar green" style="height: 75%"></div>
+                                    </div>
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar blue" style="height: 75%"></div>
+                                        <div class="chart-bar green" style="height: 85%"></div>
+                                    </div>
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar blue" style="height: 85%"></div>
+                                        <div class="chart-bar green" style="height: 90%"></div>
+                                    </div>
+                                    <div class="chart-bar-group">
+                                        <div class="chart-bar blue" style="height: 70%"></div>
+                                        <div class="chart-bar green" style="height: 80%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-progress-section">
+                                <div class="progress-header">Recent Assessments</div>
+                                <div class="progress-bars">
+                                    <div class="progress-row">
+                                        <span class="progress-label">Mathematics</span>
+                                        <div class="progress-track"><div class="progress-fill purple" style="width: 85%"></div></div>
+                                    </div>
+                                    <div class="progress-row">
+                                        <span class="progress-label">Computer Science</span>
+                                        <div class="progress-track"><div class="progress-fill blue" style="width: 92%"></div></div>
+                                    </div>
+                                    <div class="progress-row">
+                                        <span class="progress-label">Physics</span>
+                                        <div class="progress-track"><div class="progress-fill green" style="width: 78%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-donut">
+                                <svg viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12"/>
+                                    <circle cx="50" cy="50" r="40" fill="none" stroke="#0066FF" stroke-width="12" stroke-dasharray="75 251" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                                    <circle cx="50" cy="50" r="40" fill="none" stroke="#00BFFF" stroke-width="12" stroke-dasharray="63 251" stroke-dashoffset="-75" transform="rotate(-90 50 50)"/>
+                                    <circle cx="50" cy="50" r="40" fill="none" stroke="#667eea" stroke-width="12" stroke-dasharray="88 251" stroke-dashoffset="-138" transform="rotate(-90 50 50)"/>
+                                </svg>
+                                <div class="donut-center">
+                                    <div class="donut-label">Success</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -245,151 +320,145 @@
             </div>
             <div class="products-grid">
                 <!-- Product 1 -->
-                <div class="product-card" data-product="studentos">
-                    <div class="product-glow"></div>
-                    <div class="product-header">
-                        <div class="product-icon gradient-1">🎓</div>
-                        <h3>BAMSense StudentOS</h3>
+                <div class="product-card gradient-card-1" data-product="studentos">
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
                     </div>
-                    <p class="product-description">
-                        A unified intelligent platform managing the complete student lifecycle — from admission through graduation. Track attendance, assessments, performance metrics, and deliver AI-powered personalized recommendations.
-                    </p>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Automated admission & onboarding</li>
-                        <li><i class="fas fa-check"></i> Smart attendance & timetable management</li>
-                        <li><i class="fas fa-check"></i> Advanced performance analytics & skill mapping</li>
-                        <li><i class="fas fa-check"></i> AI-driven personalized learning paths</li>
-                    </ul>
-                    <div class="product-footer">
-                        <span class="product-tag">Student Management</span>
+                    <div class="product-content">
+                        <h3>BAMSense StudentOS</h3>
+                        <p class="product-description">
+                            Every student gets a personal AI assistant, and student an AI teaching assistant.
+                        </p>
+                        <ul class="product-features">
+                            <li>• Student Assistant</li>
+                            <li>• AI Assistant</li>
+                            <li>• Teaching Tools</li>
+                            <li>• AI Automation</li>
+                        </ul>
                         <button class="product-demo-btn" onclick="scrollToDemo('studentos')">
-                            <span>View Demo</span>
-                            <i class="fas fa-arrow-right"></i>
+                            View Demo
                         </button>
                     </div>
                 </div>
 
                 <!-- Product 2 -->
-                <div class="product-card" data-product="faculty">
-                    <div class="product-glow"></div>
-                    <div class="product-header">
-                        <div class="product-icon gradient-2">👨‍🏫</div>
-                        <h3>BAMSense Faculty Assist</h3>
+                <div class="product-card gradient-card-2" data-product="faculty">
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
                     </div>
-                    <p class="product-description">
-                        Revolutionary AI assistant that reduces faculty workload by 60-80%. Automate grading, generate assessments instantly, and empower educators to focus on innovation and student engagement.
-                    </p>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Intelligent automated grading & feedback</li>
-                        <li><i class="fas fa-check"></i> AI question paper generation</li>
-                        <li><i class="fas fa-check"></i> Advanced plagiarism detection</li>
-                        <li><i class="fas fa-check"></i> Real-time student progress analysis</li>
-                    </ul>
-                    <div class="product-footer">
-                        <span class="product-tag">Faculty Tools</span>
+                    <div class="product-content">
+                        <h3>BAMSense Faculty Assist</h3>
+                        <p class="product-description">
+                            Every faculty gets an pensonal AI assistant, and fiacultys an AI teaching assistant.
+                        </p>
+                        <ul class="product-features">
+                            <li>• AI Assistant</li>
+                            <li>• Usading Assistant</li>
+                            <li>• Teaching Assistant</li>
+                            <li>• Enabiling #womation</li>
+                        </ul>
                         <button class="product-demo-btn" onclick="scrollToDemo('faculty')">
-                            <span>View Demo</span>
-                            <i class="fas fa-arrow-right"></i>
+                            View Demo
                         </button>
                     </div>
                 </div>
 
                 <!-- Product 3 -->
-                <div class="product-card" data-product="recruit">
-                    <div class="product-glow"></div>
-                    <div class="product-header">
-                        <div class="product-icon gradient-3">🤝</div>
-                        <h3>BAMSense Recruit+</h3>
+                <div class="product-card gradient-card-3" data-product="recruit">
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
                     </div>
-                    <p class="product-description">
-                        Transform academic hiring with AI-powered recruitment. Intelligent candidate matching, automated credential verification, and data-driven selection for faster, fairer hiring decisions.
-                    </p>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Smart candidate shortlisting & matching</li>
-                        <li><i class="fas fa-check"></i> Automated credential verification</li>
-                        <li><i class="fas fa-check"></i> AI interview question generation</li>
-                        <li><i class="fas fa-check"></i> Comprehensive selection analytics</li>
-                    </ul>
-                    <div class="product-footer">
-                        <span class="product-tag">HR & Recruitment</span>
+                    <div class="product-content">
+                        <h3>BAMSense Recruit+</h3>
+                        <p class="product-description">
+                            Recruit incmsscriptions in nosten confinm BAMSense and a uelebute s process.
+                        </p>
+                        <ul class="product-features">
+                            <li>• Browdcasts</li>
+                            <li>• Brinding Assistant</li>
+                            <li>• Recublic Planning</li>
+                            <li>• Exam Pewentation</li>
+                        </ul>
                         <button class="product-demo-btn" onclick="scrollToDemo('recruit')">
-                            <span>View Demo</span>
-                            <i class="fas fa-arrow-right"></i>
+                            View Demo
                         </button>
                     </div>
                 </div>
 
                 <!-- Product 4 -->
-                <div class="product-card" data-product="exam">
-                    <div class="product-glow"></div>
-                    <div class="product-header">
-                        <div class="product-icon gradient-4">📝</div>
-                        <h3>BAMSense Exam Intelligence</h3>
+                <div class="product-card gradient-card-4" data-product="exam">
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
                     </div>
-                    <p class="product-description">
-                        Next-generation assessment platform with adaptive question generation, automated evaluation, AI proctoring, and deep learning gap analysis aligned with Bloom's taxonomy.
-                    </p>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Adaptive skill-based question generation</li>
-                        <li><i class="fas fa-check"></i> Automated intelligent answer evaluation</li>
-                        <li><i class="fas fa-check"></i> AI proctoring & integrity monitoring</li>
-                        <li><i class="fas fa-check"></i> Bloom's taxonomy alignment</li>
-                    </ul>
-                    <div class="product-footer">
-                        <span class="product-tag">Assessment</span>
+                    <div class="product-content">
+                        <h3>BAMSense Exam Intelligence</h3>
+                        <p class="product-description">
+                            Exam Intelligence sno eligence can be with and or asuslt.ne AI teaching assistants.
+                        </p>
+                        <ul class="product-features">
+                            <li>• Depairtments</li>
+                            <li>• Exam Fltecks</li>
+                            <li>• Student Stüetats</li>
+                            <li>• Hnown Intelligence</li>
+                        </ul>
                         <button class="product-demo-btn" onclick="scrollToDemo('exam')">
-                            <span>View Demo</span>
-                            <i class="fas fa-arrow-right"></i>
+                            View Demo
                         </button>
                     </div>
                 </div>
 
                 <!-- Product 5 -->
-                <div class="product-card" data-product="docs">
-                    <div class="product-glow"></div>
-                    <div class="product-header">
-                        <div class="product-icon gradient-5">📄</div>
-                        <h3>BAMSense Docs</h3>
+                <div class="product-card gradient-card-5" data-product="docs">
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon">
+                            <i class="fas fa-folder"></i>
+                        </div>
                     </div>
-                    <p class="product-description">
-                        Complete digital transformation of academic paperwork. Blockchain-secured, tamper-proof, AI-indexed document management system for modern educational institutions.
-                    </p>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Secure digital document verification</li>
-                        <li><i class="fas fa-check"></i> Blockchain credential management</li>
-                        <li><i class="fas fa-check"></i> Intelligent workflow automation</li>
-                        <li><i class="fas fa-check"></i> Complete compliance & audit trails</li>
-                    </ul>
-                    <div class="product-footer">
-                        <span class="product-tag">Digital Stack</span>
+                    <div class="product-content">
+                        <h3>BAMSense Docs</h3>
+                        <p class="product-description">
+                            BAMSense Docs can doinsr withunl permal and made utress primity.
+                        </p>
+                        <ul class="product-features">
+                            <li>• Repullita Docs</li>
+                            <li>• Personal Assistant</li>
+                            <li>• System srateratic •</li>
+                            <li>• Teaching AI teachire</li>
+                        </ul>
                         <button class="product-demo-btn" onclick="scrollToDemo('docs')">
-                            <span>View Demo</span>
-                            <i class="fas fa-arrow-right"></i>
+                            View Demo
                         </button>
                     </div>
                 </div>
 
                 <!-- Product 6 -->
-                <div class="product-card" data-product="campus">
-                    <div class="product-glow"></div>
-                    <div class="product-header">
-                        <div class="product-icon gradient-6">🏢</div>
-                        <h3>BAMSense CampusFlow</h3>
+                <div class="product-card gradient-card-6" data-product="campus">
+                    <div class="product-icon-wrapper">
+                        <div class="product-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
                     </div>
-                    <p class="product-description">
-                        End-to-end campus operations automation. AI-powered workflow management from venue booking to budget approvals — intelligent routing, predictive analytics, and optimization.
-                    </p>
-                    <ul class="product-features">
-                        <li><i class="fas fa-check"></i> Smart venue & resource booking</li>
-                        <li><i class="fas fa-check"></i> Automated budget & purchase approvals</li>
-                        <li><i class="fas fa-check"></i> Integrated hostel & transport management</li>
-                        <li><i class="fas fa-check"></i> Event & committee workflow automation</li>
-                    </ul>
-                    <div class="product-footer">
-                        <span class="product-tag">Operations</span>
+                    <div class="product-content">
+                        <h3>BAMSense CampusFlow</h3>
+                        <p class="product-description">
+                            BAMSense CampusFlow can irrmat student assistans with aim AI teaching systems.
+                        </p>
+                        <ul class="product-features">
+                            <li>• CampusFlow</li>
+                            <li>• Crossmhhnomation</li>
+                            <li>• Student Strutats</li>
+                            <li>• Student Attentition</li>
+                        </ul>
                         <button class="product-demo-btn" onclick="scrollToDemo('campus')">
-                            <span>View Demo</span>
-                            <i class="fas fa-arrow-right"></i>
+                            View Demo
                         </button>
                     </div>
                 </div>
