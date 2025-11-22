@@ -71,6 +71,34 @@ body {
     overflow-x: hidden;
 }
 
+/* Screen reader only class for accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
 .container {
     max-width: 1280px;
     margin: 0 auto;
@@ -210,12 +238,25 @@ body {
     gap: 5px;
 }
 
+.hamburger {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.hamburger:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 4px;
+}
+
 .hamburger span {
     width: 25px;
     height: 3px;
     background: var(--text-primary);
     border-radius: 3px;
     transition: var(--transition-fast);
+    display: block;
 }
 
 /* ===========================
@@ -2115,6 +2156,13 @@ section {
     cursor: pointer;
     box-shadow: var(--shadow-glow);
     transition: var(--transition-normal);
+    border: none;
+    position: fixed;
+}
+
+.chat-toggle:focus {
+    outline: 3px solid white;
+    outline-offset: 4px;
 }
 
 .chat-toggle:hover {
@@ -2357,6 +2405,69 @@ section {
     background: rgba(0, 102, 255, 0.2);
     border-color: var(--primary-blue);
     color: var(--text-primary);
+}
+
+.suggestion-chip:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+/* Typing indicator animation */
+.typing-dots {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.typing-dots span {
+    animation: typingDot 1.4s ease-in-out infinite;
+    opacity: 0.4;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingDot {
+    0%, 60%, 100% {
+        opacity: 0.4;
+        transform: translateY(0);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(-8px);
+    }
+}
+
+/* Loading state for buttons */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ===========================

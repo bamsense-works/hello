@@ -10,8 +10,11 @@ const navMenu = document.getElementById('navMenu');
 
 if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
+        const isActive = hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
+
+        // Update ARIA attribute for accessibility
+        hamburger.setAttribute('aria-expanded', isActive);
     });
 
     // Close mobile menu when clicking on a link
@@ -19,6 +22,7 @@ if (hamburger && navMenu) {
         link.addEventListener('click', () => {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
         });
     });
 }

@@ -3,42 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BAMSense Works - Intelligence that powers education. AI solutions for educational institutions.">
+
+    <!-- Primary Meta Tags -->
     <title>BAMSense Works | The AI Operating System for Education</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="title" content="BAMSense Works | The AI Operating System for Education">
+    <meta name="description" content="Transform your educational institution with BAMSense Works' AI-powered platform. Automate workflows, personalize learning, and enhance student success with our complete suite of AI solutions for education.">
+    <meta name="keywords" content="education AI, student management system, faculty assistance, AI assessment, education technology, EdTech, learning management system, academic automation">
+    <meta name="author" content="BAMSense Works">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bamsense.works/">
+    <meta property="og:title" content="BAMSense Works | The AI Operating System for Education">
+    <meta property="og:description" content="Transform your educational institution with AI-powered solutions. Reduce workload by 80%, personalize learning, and enhance student success.">
+    <meta property="og:image" content="https://bamsense.works/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bamsense.works/">
+    <meta property="twitter:title" content="BAMSense Works | The AI Operating System for Education">
+    <meta property="twitter:description" content="Transform your educational institution with AI-powered solutions. Reduce workload by 80%, personalize learning, and enhance student success.">
+    <meta property="twitter:image" content="https://bamsense.works/twitter-image.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bamsense.works/">
+
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "BAMSense Works",
+      "description": "AI Operating System for Education",
+      "url": "https://bamsense.works",
+      "logo": "https://bamsense.works/logo.png",
+      "email": "bamsense.works@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Vyas Building, Shilpa Housing Society, Rambaug Colony, Kothrud",
+        "addressLocality": "Pune",
+        "addressRegion": "Maharashtra",
+        "postalCode": "411038",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://linkedin.com/company/bamsense-works",
+        "https://twitter.com/bamsenseworks"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "BAMSense Works Platform",
+      "applicationCategory": "EducationalApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "500"
+      }
+    }
+    </script>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
         <div class="container nav-container">
-            <div class="logo">
-                <div class="logo-icon">
+            <a href="#home" class="logo" aria-label="BAMSense Works home">
+                <div class="logo-icon" aria-hidden="true">
                     <div class="logo-shape"></div>
                 </div>
                 <span class="logo-text">BAMSense <span class="logo-accent">Works</span></span>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#products" class="nav-link">Products</a></li>
-                <li><a href="#demos" class="nav-link">Demos</a></li>
-                <li><a href="#contact" class="nav-link cta-button">Get Started</a></li>
+            </a>
+            <ul class="nav-menu" id="navMenu" role="menubar">
+                <li role="none"><a href="#home" class="nav-link" role="menuitem">Home</a></li>
+                <li role="none"><a href="#about" class="nav-link" role="menuitem">About</a></li>
+                <li role="none"><a href="#products" class="nav-link" role="menuitem">Products</a></li>
+                <li role="none"><a href="#demos" class="nav-link" role="menuitem">Demos</a></li>
+                <li role="none"><a href="#contact" class="nav-link cta-button" role="menuitem">Get Started</a></li>
             </ul>
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-background">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="hero-background" aria-hidden="true">
             <div class="gradient-orb orb-1"></div>
             <div class="gradient-orb orb-2"></div>
             <div class="gradient-orb orb-3"></div>
@@ -52,7 +123,7 @@
                     <span>AI-Powered Education Platform</span>
                 </div>
 
-                <h1 class="hero-title">
+                <h1 class="hero-title" id="hero-title">
                     Intelligence That<br>
                     <span class="gradient-text">Powers Education</span>
                 </h1>
@@ -63,13 +134,13 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="#demos" class="btn-hero btn-primary">
+                    <a href="#demos" class="btn-hero btn-primary" aria-label="Experience the platform - view interactive demos">
                         <span>Experience the Platform</span>
-                        <i class="fas fa-arrow-right"></i>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </a>
-                    <a href="#contact" class="btn-hero btn-secondary">
+                    <a href="#contact" class="btn-hero btn-secondary" aria-label="Schedule a demo with our team">
                         <span>Schedule Demo</span>
-                        <i class="fas fa-calendar"></i>
+                        <i class="fas fa-calendar" aria-hidden="true"></i>
                     </a>
                 </div>
 
@@ -1007,30 +1078,30 @@
     </footer>
 
     <!-- Floating AI Chat Button -->
-    <div class="chat-toggle" id="chatToggle">
+    <button class="chat-toggle" id="chatToggle" aria-label="Open AI chat assistant" aria-haspopup="dialog">
         <div class="chat-icon">
-            <i class="fas fa-comment-dots"></i>
+            <i class="fas fa-comment-dots" aria-hidden="true"></i>
         </div>
-        <div class="chat-pulse"></div>
-    </div>
+        <div class="chat-pulse" aria-hidden="true"></div>
+    </button>
 
     <!-- AI Chat Window -->
-    <div class="chat-window" id="chatWindow">
+    <div class="chat-window" id="chatWindow" role="dialog" aria-labelledby="chat-title" aria-modal="false">
         <div class="chat-header">
             <div class="chat-header-content">
-                <div class="chat-avatar">
+                <div class="chat-avatar" aria-hidden="true">
                     <i class="fas fa-robot"></i>
                 </div>
                 <div class="chat-header-text">
-                    <h4>BAMSense AI Assistant</h4>
-                    <span class="chat-status">● Online</span>
+                    <h4 id="chat-title">BAMSense AI Assistant</h4>
+                    <span class="chat-status" role="status" aria-live="polite">● Online</span>
                 </div>
             </div>
-            <button class="chat-close" id="chatClose">
-                <i class="fas fa-times"></i>
+            <button class="chat-close" id="chatClose" aria-label="Close chat">
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
-        <div class="chat-messages" id="chatMessages">
+        <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-atomic="false">
             <div class="chat-message bot-message">
                 <div class="message-avatar">
                     <i class="fas fa-robot"></i>
@@ -1041,9 +1112,10 @@
             </div>
         </div>
         <div class="chat-input-container">
-            <input type="text" id="chatInput" placeholder="Ask me anything about BAMSense..." />
-            <button id="chatSend">
-                <i class="fas fa-paper-plane"></i>
+            <label for="chatInput" class="sr-only">Type your message</label>
+            <input type="text" id="chatInput" placeholder="Ask me anything about BAMSense..." aria-label="Chat message input" />
+            <button id="chatSend" aria-label="Send message">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
             </button>
         </div>
         <div class="chat-suggestions">

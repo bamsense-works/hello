@@ -2,11 +2,26 @@
 // BAMSense Works - AI Chat Assistant (Gemini Integration)
 // ===========================
 
-// IMPORTANT: For production, store API key securely on backend
-// This is a demonstration of client-side integration
-// In production, proxy all API calls through your backend
+// ⚠️ SECURITY WARNING ⚠️
+// This demo stores the API key in the frontend code, which is NOT SECURE for production.
+//
+// FOR PRODUCTION USE:
+// 1. Create a backend API endpoint (e.g., /api/chat)
+// 2. Store your Gemini API key in environment variables on the server
+// 3. Have your frontend call your backend endpoint
+// 4. Your backend proxies the request to Gemini API
+//
+// Example backend (Node.js/Express):
+//   app.post('/api/chat', async (req, res) => {
+//     const apiKey = process.env.GEMINI_API_KEY;
+//     const response = await fetch(GEMINI_URL + `?key=${apiKey}`, ...);
+//     res.json(await response.json());
+//   });
+//
+// Then update this file to call: fetch('/api/chat', { method: 'POST', ... })
 
-const GEMINI_API_KEY = 'AIzaSyAYy-bYwYMwx_vxF2n_UkxYE1oNSol4ayU'; // Replace with your actual API key
+// For demo purposes only - REPLACE with environment variable or backend call
+const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // ⚠️ DO NOT commit real API keys
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
 // BAMSense Works Company Knowledge Base
@@ -119,6 +134,20 @@ async function sendMessage(message) {
     } catch (error) {
         console.error('Error getting AI response:', error);
         typingIndicator.remove();
+
+        // User-friendly error message
+        let errorMessage = "I apologize, but I'm having trouble connecting right now. ";
+
+        if (error.message.includes('API')) {
+            errorMessage += "The AI service is temporarily unavailable. ";
+        } else if (error.message.includes('network') || error.message.includes('Failed to fetch')) {
+            errorMessage += "Please check your internet connection. ";
+        }
+
+        errorMessage += "Here's what I can help with based on your question:";
+
+        // Show error message with fallback
+        addMessageToChat(errorMessage, 'bot');
 
         // Fallback response
         const fallbackResponse = getFallbackResponse(message);
@@ -306,14 +335,16 @@ function addTypingIndicator() {
     const typingDiv = document.createElement('div');
     typingDiv.className = 'chat-message bot-message typing-indicator';
     typingDiv.id = 'typingIndicator';
+    typingDiv.setAttribute('aria-label', 'AI assistant is typing');
 
     const avatar = document.createElement('div');
     avatar.className = 'message-avatar';
+    avatar.setAttribute('aria-hidden', 'true');
     avatar.innerHTML = '<i class="fas fa-robot"></i>';
 
     const content = document.createElement('div');
     content.className = 'message-content';
-    content.innerHTML = '<p>Typing...</p>';
+    content.innerHTML = '<p><span class="typing-dots"><span>.</span><span>.</span><span>.</span></span></p>';
 
     typingDiv.appendChild(avatar);
     typingDiv.appendChild(content);
